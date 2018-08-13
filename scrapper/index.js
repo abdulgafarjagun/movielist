@@ -1,11 +1,24 @@
+var http = require('http');
 var JSSoup = require('jssoup').default;
-var getUrlAsWebPage = require('./getWebPage');
 
-var html = getUrlAsWebPage;
+    var options = {
+        host: 'silverbirdcinemas.com',
+        path: '/cinema/accra/',
+        method: 'get',
+        headers:{
+            'Content-Type' : 'text/html'
+        }
+    }
+        var html = '';
 
-console.log(html);
-
-// var soup = new JSSoup(getUrlAsWebPage);
-
+        http.request(options, (res) => {
+            res.on('data', (chunk) => {
+                html += chunk;
+            })
+            res.on('end', () => {
+                var soup = new JSSoup(html);
+                soup.
+            });
+        }).end();
 
 
