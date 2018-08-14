@@ -1,5 +1,7 @@
 var express = require('express');
-var morgan = require('mor')
+var morgan = require('morgan');
+var bodyParser = require('body-parser');
+
 
 //routers
 var moviesrouter = require('./routes/moviesrouter.js');
