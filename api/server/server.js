@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 
 
 //routers
-var moviesrouter = require('./routes/moviesrouter.js');
+var moviesrouter = require('../routes/moviesrouter.js');
 
 var app = express();
 

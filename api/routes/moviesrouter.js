@@ -1,6 +1,6 @@
 var movieRouter = require('express').Router();
 
-movieRouter.route('/')
+movieRouter.route('/movies')
     .get((req, res) => {
         res.send("hello world from home");
     });
