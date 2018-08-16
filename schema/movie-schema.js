@@ -2,7 +2,6 @@ var movie = {
     "name" : "",
     "duration" : "",
     "time" : "",
-    "release-date" : "",
-    "genre" : ""
+    "details" : ""
 }
 module.exports = movie;

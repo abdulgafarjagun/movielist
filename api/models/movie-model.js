@@ -1,12 +1,9 @@
-var mongoose = require('mongoose');
-var schema = mongoose.Schema;
 
-var movieSchema = new Schema({
+var movieSchemaSpec = {
     name : String,
-    duration : Number,
-    time : Date,
-    date : Date,
-    genre : String
-});
+    duration : String,
+    time : String,
+    details : String
+};
 
-module.exports = mongoose.model('movie', )
+module.exports = movieSchemaSpec;

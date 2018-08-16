@@ -1,7 +1,11 @@
 var http = require('http');
 
 //node refused to recognize jssoup
-var JSSoup = require('jssoup').default;
+// var JSSoup = require().default;
+const cheerio = require('cheerio');
+const movie = require('../schema/movie-schema.js');
+const context = require('mongoose');
+const movieSchemaSpec = require('../api/models/movie-model.js');
 
     //options for web page content, works when i print to console (node index.js)
 
@@ -30,12 +34,39 @@ var JSSoup = require('jssoup').default;
             res.on('data', (chunk) => {
                 html += chunk;
             })
-            //parse html and write to file as JSON on 'end' event
+            //parse html and write to mongo as JSON on 'end' event
             res.on('end', () => {
-                console.log(html);
-                 
-                //var soup = new JSSoup(html);
-                //soup.
+                // console.log(html);
+                const $ = new cheerio.load(html);
+
+                context.connect('mongodb://localhost/movies');
+
+                const movieSchema = new context.Schema(movieSchemaSpec);
+
+                var dbMovies = context.model('movies', movieSchema);
+
+                $('.entry-title').each((i, div) => {
+
+                    // console.log($('.entry-title', '.entry-content').eq(i).text());
+                    // console.log($('.entry-date').eq(i).text());
+                    //console.log($('p.cinema_page_showtime').children('strong').eq(i).text());
+                    //console.log($('div.desc-mv').eq(i).text());
+
+                    $('div.note').eq(i).each((d, div) => {
+                        console.log($('div.note').children('a').eq(d).text());
+                    }
+                    
+                    
+                    // movie.name = $('.entry-title', '.entry-content').eq(i).text();
+                    // movie.duration = $('.entry-date').eq(i).text();
+                    // movie.time = $('p.cinema_page_showtime').children('strong').eq(i).text();
+                    // movie.details = $('div.desc-mv').eq(i).text();
+
+                    // dbMovies.create(movie)
+                    // .then((err,movie) => {
+                    //     console.log(err, movie);
+                    // });
+                });
             });
         }).end();
 
