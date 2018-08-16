@@ -50,22 +50,26 @@ const movieSchemaSpec = require('../api/models/movie-model.js');
                     // console.log($('.entry-title', '.entry-content').eq(i).text());
                     // console.log($('.entry-date').eq(i).text());
                     //console.log($('p.cinema_page_showtime').children('strong').eq(i).text());
-                    //console.log($('div.desc-mv').eq(i).text());
-
-                    $('div.note').eq(i).each((d, div) => {
-                        console.log($('div.note').children('a').eq(d).text());
-                    }
+                    // console.log($('div.desc-mv').eq(i).text().slice(8, 20));
+                    // console.log($('div.note').eq(i).text().slice(6, 200));
+                    // console.log($('div.entry-rating span.mcount').eq(i).text().replace('votes', ''));
+                    // console.log($('div.entry-rating span.rate').eq(i).text());
+                    // console.log($('div.note').next().eq(i).text().slice(9, 30));
                     
-                    
-                    // movie.name = $('.entry-title', '.entry-content').eq(i).text();
-                    // movie.duration = $('.entry-date').eq(i).text();
-                    // movie.time = $('p.cinema_page_showtime').children('strong').eq(i).text();
-                    // movie.details = $('div.desc-mv').eq(i).text();
+                    movie.name = $('.entry-title', '.entry-content').eq(i).text();
+                    movie.duration = $('.entry-date').eq(i).text();
+                    movie.time = $('p.cinema_page_showtime').children('strong').eq(i).text();
+                    movie.releaseDate = $('div.desc-mv').eq(i).text().slice(8, 20);
+                    movie.genre = $('div.note').eq(i).text().slice(6, 200);
+                    movie.language = $('div.note').next().eq(i).text().slice(9, 30);
+                    movie.votes = $('div.entry-rating span.mcount').eq(i).text().replace('votes', '');
+                    movie.rate = $('div.entry-rating span.rate').eq(i).text();
 
-                    // dbMovies.create(movie)
-                    // .then((err,movie) => {
-                    //     console.log(err, movie);
-                    // });
+
+                    dbMovies.create(movie)
+                    .then((err,movie) => {
+                        console.log(err, movie);
+                    });
                 });
             });
         }).end();

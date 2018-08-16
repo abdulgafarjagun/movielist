@@ -2,6 +2,10 @@ var movie = {
     "name" : "",
     "duration" : "",
     "time" : "",
-    "details" : ""
+    "releaseDate" : new Date,
+    "genre" : "",
+    "language" : "",
+    "votes" : 0,
+    "rate" : 0
 }
 module.exports = movie;
