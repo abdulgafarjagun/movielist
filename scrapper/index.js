@@ -36,25 +36,12 @@ const movieSchemaSpec = require('../api/models/movie-model.js');
             })
             //parse html and write to mongo as JSON on 'end' event
             res.on('end', () => {
-                // console.log(html);
                 const $ = new cheerio.load(html);
-
                 context.connect('mongodb://localhost/movies');
-
                 const movieSchema = new context.Schema(movieSchemaSpec);
-
                 var dbMovies = context.model('movies', movieSchema);
 
                 $('.entry-title').each((i, div) => {
-
-                    // console.log($('.entry-title', '.entry-content').eq(i).text());
-                    // console.log($('.entry-date').eq(i).text());
-                    //console.log($('p.cinema_page_showtime').children('strong').eq(i).text());
-                    // console.log($('div.desc-mv').eq(i).text().slice(8, 20));
-                    // console.log($('div.note').eq(i).text().slice(6, 200));
-                    // console.log($('div.entry-rating span.mcount').eq(i).text().replace('votes', ''));
-                    // console.log($('div.entry-rating span.rate').eq(i).text());
-                    // console.log($('div.note').next().eq(i).text().slice(9, 30));
                     
                     movie.name = $('.entry-title', '.entry-content').eq(i).text();
                     movie.duration = $('.entry-date').eq(i).text();
