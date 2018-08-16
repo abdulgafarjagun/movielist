@@ -41,7 +41,7 @@ const movieSchemaSpec = require('../api/models/movie-model.js');
                 const movieSchema = new context.Schema(movieSchemaSpec);
                 var dbMovies = context.model('movies', movieSchema);
 
-                $('.entry-title').each((i, div) => {
+                $('article.entry-item').each((i, div) => {
                     
                     movie.name = $('.entry-title', '.entry-content').eq(i).text();
                     movie.duration = $('.entry-date').eq(i).text();
