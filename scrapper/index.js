@@ -1,23 +1,9 @@
 var http = require('http');
-
-//node refused to recognize jssoup
-// var JSSoup = require().default;
 const cheerio = require('cheerio');
 const movie = require('../schema/movie-schema.js');
 const context = require('mongoose');
 const movieSchemaSpec = require('../api/models/movie-model.js');
 
-    //options for web page content, works when i print to console (node index.js)
-
-    //my strategy was to pass the html page from the http request directly to jssoup, then parse it and 
-    //save the content to file as JSON.
-
-    //BLOCKER:
-    //JSSoup is given me the following error
-    // [ts]
-    // Could not find a declaration file for module 'jssoup'. '/Users/seniorconsultant/Projects/movielist/scrapper/node_modules/jssoup/dist/lib/jssoup.js' implicitly has an 'any' type.
-    // Try `npm install @types/jssoup` if it exists or add a new declaration (.d.ts) file containing `declare module 'jssoup';`
-    // module "/Users/seniorconsultant/Projects/movielist/scrapper/node_modules/jssoup/dist/lib/jssoup"
     var options = {
         host: 'silverbirdcinemas.com',
         path: '/cinema/accra/',
@@ -37,6 +23,25 @@ const movieSchemaSpec = require('../api/models/movie-model.js');
             //parse html and write to mongo as JSON on 'end' event
             res.on('end', () => {
                 const $ = new cheerio.load(html);
+                context.connect('mongodb://localhost/movies');
+                const movieSchema = new context.Schema(movieSchemaSpec);
+                var dbMovies = context.model('movies', movieSchema);
+
+                //#region 
+
+                // $('.article.entry-item').each((i, div) => {
+
+                //     console.log($('.entry-title', '.entry-content').eq(i).text());
+                //     console.log($('.entry-date').eq(i).text());
+                //     console.log($('p.cinema_page_showtime').children('strong').eq(i).text());
+                //     console.log($('div.desc-mv').eq(i).text().slice(8, 20));
+                //     console.log($('div.note').eq(i).text().slice(6, 200));
+                //     console.log($('div.entry-rating span.mcount').eq(i).text().replace('votes', ''));
+                //     console.log($('div.entry-rating span.rate').eq(i).text());
+                //     console.log($('div.note').next().eq(i).text().slice(9, 30));
+
+                //#endregion
+
                 context.connect('mongodb://localhost/movies');
                 const movieSchema = new context.Schema(movieSchemaSpec);
                 var dbMovies = context.model('movies', movieSchema);
