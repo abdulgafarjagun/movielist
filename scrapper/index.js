@@ -23,6 +23,7 @@ const movieSchemaSpec = require('../api/models/movie-model.js');
             //parse html and write to mongo as JSON on 'end' event
             res.on('end', () => {
                 const $ = new cheerio.load(html);
+
                 context.connect('mongodb://localhost/movies');
                 const movieSchema = new context.Schema(movieSchemaSpec);
                 var dbMovies = context.model('movies', movieSchema);
@@ -41,11 +42,7 @@ const movieSchemaSpec = require('../api/models/movie-model.js');
                 //     console.log($('div.note').next().eq(i).text().slice(9, 30));
 
                 //#endregion
-
-                context.connect('mongodb://localhost/movies');
-                const movieSchema = new context.Schema(movieSchemaSpec);
-                var dbMovies = context.model('movies', movieSchema);
-
+                
                 $('article.entry-item').each((i, div) => {
                     
                     movie.name = $('.entry-title', '.entry-content').eq(i).text();
